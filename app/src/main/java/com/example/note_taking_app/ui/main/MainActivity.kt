@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -40,10 +41,17 @@ class MainActivity : AppCompatActivity() {
         binding.rvNotes.layoutManager = LinearLayoutManager(this)
 
         noteViewModel.allNotes.observe(this, Observer {
-            adapter = NoteAdapter(it) { note ->
-                noteViewModel.deleteNote(note)
+            if (it.isEmpty()) {
+                binding.emptyText.visibility = View.VISIBLE
+                binding.rvNotes.visibility = View.GONE
+            } else {
+                binding.emptyText.visibility = View.GONE
+                binding.rvNotes.visibility = View.VISIBLE
+                adapter = NoteAdapter(it) { note ->
+                    noteViewModel.deleteNote(note)
+                }
+                binding.rvNotes.adapter = adapter
             }
-            binding.rvNotes.adapter = adapter  // Use binding to set the adapter
         })
     }
 
