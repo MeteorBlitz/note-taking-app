@@ -1,5 +1,6 @@
 package com.example.note_taking_app.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -10,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.note_taking_app.R
 import com.example.note_taking_app.databinding.ActivityMainBinding
+import com.example.note_taking_app.ui.addnote.AddNoteActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -47,7 +49,9 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_add -> {
-                // Open activity to add a note (this can be an Intent to a new screen)
+                // Start AddNoteActivity to add a new note
+                val intent = Intent(this, AddNoteActivity::class.java)
+                startActivity(intent)
             }
         }
         return super.onOptionsItemSelected(item)
