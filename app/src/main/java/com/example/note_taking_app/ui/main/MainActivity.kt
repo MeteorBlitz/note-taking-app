@@ -4,8 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,18 +20,21 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var noteViewModel: NoteViewModel
+    private val noteViewModel: NoteViewModel by viewModels()
     private lateinit var adapter: NoteAdapter
     private lateinit var binding: ActivityMainBinding  // Declare binding variable
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        //WindowCompat.setDecorFitsSystemWindows(window, true)
         super.onCreate(savedInstanceState)
 
         // Initialize ViewBinding
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)  // Use the root view from ViewBinding
 
-        noteViewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
+        // Set up toolbar
+        setSupportActionBar(binding.topAppBar)
+
 
         // Set up RecyclerView with View Binding
         binding.rvNotes.layoutManager = LinearLayoutManager(this)
