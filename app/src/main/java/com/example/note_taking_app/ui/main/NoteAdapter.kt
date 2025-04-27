@@ -25,7 +25,7 @@ class NoteAdapter(private val notes: List<Note>, private val onDelete: (Note) ->
         fun bind(note: Note) {
             binding.noteTitle.text = note.title
             binding.noteContent.text = note.content
-            binding.root.setOnClickListener {
+            binding.noteDelete.setOnClickListener {
                 onDelete(note) // Handle delete on click
             }
         }
