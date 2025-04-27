@@ -14,6 +14,9 @@
         android:theme="@style/Theme.Notetakingapp"
         tools:targetApi="31">
         <activity
+            android:name=".ui.edit.EditNoteActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.addnote.AddNoteActivity"
             android:exported="false" />
         <activity
