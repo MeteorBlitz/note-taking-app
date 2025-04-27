@@ -11,12 +11,14 @@ import com.example.note_taking_app.R
 import com.example.note_taking_app.databinding.ActivityEditNoteBinding
 import com.example.note_taking_app.model.Note
 import com.example.note_taking_app.ui.main.NoteViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlin.getValue
 
+@AndroidEntryPoint
 class EditNoteActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEditNoteBinding
     private val noteViewModel: NoteViewModel by viewModels()
-    private var noteId: Long = -1  // To hold the ID of the note to edit
+    private var noteId: Int = -1  // To hold the ID of the note to edit
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,9 +27,9 @@ class EditNoteActivity : AppCompatActivity() {
 
 
         // Get the note ID passed from the previous screen
-        noteId = intent.getLongExtra("NOTE_ID", -1)
+        noteId = intent.getIntExtra("NOTE_ID", -1)
 
-        if (noteId != -1L) {
+        if (noteId != -1) {
             // Fetch the note from the database and display it for editing
             noteViewModel.getNoteById(noteId).observe(this) { note ->
                 binding.etTitle.setText(note?.title)
@@ -40,7 +42,7 @@ class EditNoteActivity : AppCompatActivity() {
             val description = binding.etDescription.text.toString()
 
             if (title.isNotEmpty() && description.isNotEmpty()) {
-                val updatedNote = Note(id = noteId.toInt(), title = title, content = description)
+                val updatedNote = Note(id = noteId, title = title, content = description)
                 noteViewModel.updateNote(updatedNote)
                 Toast.makeText(this, "Note updated!", Toast.LENGTH_SHORT).show()
                 finish()  // Close the activity and go back to the main screen

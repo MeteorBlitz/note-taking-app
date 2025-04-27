@@ -25,7 +25,7 @@ class NoteRepository @Inject constructor(private val noteDao: NoteDao) {
     }
 
     // Fetch a note by ID
-    fun getNoteById(id: Long): LiveData<Note?> {
+    fun getNoteById(id: Int): LiveData<Note?> {
         return noteDao.getNoteById(id)
     }
 }

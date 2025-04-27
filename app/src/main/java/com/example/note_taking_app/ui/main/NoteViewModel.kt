@@ -34,7 +34,7 @@ class NoteViewModel @Inject constructor(private val repository: NoteRepository) 
     }
 
     // Fetch a note by ID
-    fun getNoteById(id: Long): LiveData<Note?> {
+    fun getNoteById(id: Int): LiveData<Note?> {
         return repository.getNoteById(id)
     }
 }

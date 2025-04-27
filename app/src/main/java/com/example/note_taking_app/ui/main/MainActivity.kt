@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
                     noteViewModel.deleteNote(note)
                 },{
                     val intent = Intent(this, EditNoteActivity::class.java)
-                    intent.putExtra("note_id", it.id)
+                    intent.putExtra("NOTE_ID", it.id)
                     startActivity(intent)
                 })
                 binding.rvNotes.adapter = adapter
