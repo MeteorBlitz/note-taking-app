@@ -25,4 +25,16 @@ class NoteViewModel @Inject constructor(private val repository: NoteRepository) 
             repository.delete(note)
         }
     }
+
+    // Method to update the note
+    fun updateNote(note: Note) {
+        viewModelScope.launch {
+            repository.update(note)
+        }
+    }
+
+    // Fetch a note by ID
+    fun getNoteById(id: Long): LiveData<Note?> {
+        return repository.getNoteById(id)
+    }
 }
