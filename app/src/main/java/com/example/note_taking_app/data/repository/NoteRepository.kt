@@ -18,4 +18,14 @@ class NoteRepository @Inject constructor(private val noteDao: NoteDao) {
     suspend fun delete(note: Note) {
         noteDao.delete(note)
     }
+
+    // Update
+    suspend fun update(note: Note) {
+        noteDao.update(note)
+    }
+
+    // Fetch a note by ID
+    fun getNoteById(id: Long): LiveData<Note?> {
+        return noteDao.getNoteById(id)
+    }
 }
