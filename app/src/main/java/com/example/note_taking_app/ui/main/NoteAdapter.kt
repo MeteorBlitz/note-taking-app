@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.note_taking_app.databinding.ItemNoteBinding
 import com.example.note_taking_app.model.Note
 
-class NoteAdapter(private val notes: List<Note>, private val onDelete: (Note) -> Unit)
+class NoteAdapter(private val notes: List<Note>,
+                  private val onDelete: (Note) -> Unit,
+                  private val onEditClick: (Note) -> Unit)
     : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
@@ -28,6 +30,7 @@ class NoteAdapter(private val notes: List<Note>, private val onDelete: (Note) ->
             binding.noteDelete.setOnClickListener {
                 onDelete(note) // Handle delete on click
             }
+            binding.noteEdit.setOnClickListener { onEditClick(note) }
         }
     }
 }
