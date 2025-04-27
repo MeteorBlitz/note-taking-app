@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.note_taking_app.R
 import com.example.note_taking_app.databinding.ActivityMainBinding
 import com.example.note_taking_app.ui.addnote.AddNoteActivity
+import com.example.note_taking_app.ui.edit.EditNoteActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -47,9 +48,13 @@ class MainActivity : AppCompatActivity() {
             } else {
                 binding.emptyText.visibility = View.GONE
                 binding.rvNotes.visibility = View.VISIBLE
-                adapter = NoteAdapter(it) { note ->
+                adapter = NoteAdapter(it ,{ note ->
                     noteViewModel.deleteNote(note)
-                }
+                },{
+                    val intent = Intent(this, EditNoteActivity::class.java)
+                    intent.putExtra("note_id", it.id)
+                    startActivity(intent)
+                })
                 binding.rvNotes.adapter = adapter
             }
         })
