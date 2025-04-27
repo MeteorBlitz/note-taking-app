@@ -1,4 +1,4 @@
-package com.example.note_taking_app.ui
+package com.example.note_taking_app.ui.main
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
