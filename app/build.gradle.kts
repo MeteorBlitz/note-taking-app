@@ -54,7 +54,7 @@ dependencies {
 
     //room
     implementation(libs.androidx.room.runtime)
-    annotationProcessor(libs.androidx.room.compiler) // or ksp for Kotlin
+    ksp(libs.androidx.room.compiler) // or ksp for Kotlin
     //DI
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
