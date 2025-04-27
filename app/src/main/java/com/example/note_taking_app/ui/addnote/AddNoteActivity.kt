@@ -2,19 +2,18 @@ package com.example.note_taking_app.ui.addnote
 
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.ViewModelProvider
-import com.example.note_taking_app.R
 import com.example.note_taking_app.databinding.ActivityAddNoteBinding
 import com.example.note_taking_app.model.Note
 import com.example.note_taking_app.ui.main.NoteViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AddNoteActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddNoteBinding
-    private lateinit var noteViewModel: NoteViewModel
+    // Get the NoteViewModel
+    private val noteViewModel: NoteViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,8 +22,6 @@ class AddNoteActivity : AppCompatActivity() {
         binding = ActivityAddNoteBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Get the NoteViewModel
-        noteViewModel = ViewModelProvider(this)[NoteViewModel::class.java]
 
         // Set up Save Button Click Listener
         binding.btnSave.setOnClickListener {
