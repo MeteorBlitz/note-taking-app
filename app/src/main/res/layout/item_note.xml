@@ -37,6 +37,16 @@
             android:textColor="@android:color/darker_gray"
             android:maxLines="2"
             android:ellipsize="end"/>
+
+        <!-- Timestamp for the Note -->
+        <TextView
+            android:id="@+id/noteTimestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Apr 28, Mon"
+            android:textSize="12sp"
+            android:textColor="@android:color/darker_gray"
+            android:layout_marginTop="4dp"/>
     </LinearLayout>
 
 e    <!-- Container for Edit and Delete icons side by side -->
