@@ -2,4 +2,13 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <!-- Light mode colors -->
+    <color name="colorPrimaryLight">#6200EE</color>
+    <color name="colorPrimaryVariantLight">#3700B3</color>
+    <color name="colorOnPrimaryLight">#FFFFFF</color>
+
+    <!-- Dark mode colors -->
+    <color name="colorPrimaryDark">#BB86FC</color>
+    <color name="colorPrimaryVariantDark">#3700B3</color>
+    <color name="colorOnPrimaryDark">#000000</color>
 </resources>
