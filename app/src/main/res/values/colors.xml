@@ -11,4 +11,7 @@
     <color name="colorPrimaryDark">#BB86FC</color>
     <color name="colorPrimaryVariantDark">#3700B3</color>
     <color name="colorOnPrimaryDark">#000000</color>
+
+    <!-- Red color at 50% opacity -->
+    <color name="colorRed50">#FF4D4D</color>  <!-- This is 50% opacity red -->
 </resources>
