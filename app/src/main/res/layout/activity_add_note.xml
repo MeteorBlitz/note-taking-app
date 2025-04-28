@@ -4,8 +4,10 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="?android:attr/windowBackground">
 
+    <!-- Toolbar for the app title or back navigation -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -19,7 +21,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter Note Title"
-        android:inputType="text" />
+        android:textColor="?android:textColorPrimary"
+        android:textColorHint="?android:textColorSecondary"
+        android:textSize="18sp"
+        android:inputType="text"
+        android:padding="10dp"
+        android:background="@drawable/rounded_edit_text"
+        android:layout_marginTop="16dp"/>
 
     <!-- Note Content EditText -->
     <EditText
@@ -27,15 +35,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter Note Content"
+        android:textColor="?android:textColorPrimary"
+        android:textColorHint="?android:textColorSecondary"
+        android:textSize="16sp"
         android:inputType="textMultiLine"
         android:minHeight="150dp"
         android:gravity="top|start"
-        android:scrollbars="vertical" />
+        android:scrollbars="vertical"
+        android:padding="10dp"
+        android:background="@drawable/rounded_edit_text"
+        android:layout_marginTop="8dp" />
 
     <!-- Save Button -->
     <Button
         android:id="@+id/btnSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save Note" />
+        android:text="Save Note"
+        android:textColor="@android:color/white"
+        android:background="@drawable/rounded_button"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="16dp"
+        android:padding="12dp"
+        android:textSize="16sp"
+         android:elevation="4dp"/>
+
 </LinearLayout>
