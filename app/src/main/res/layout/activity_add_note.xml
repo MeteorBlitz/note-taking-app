@@ -21,13 +21,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter Note Title"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:textColor="?android:textColorPrimary"
         android:textColorHint="?android:textColorSecondary"
         android:textSize="18sp"
         android:inputType="text"
-        android:padding="10dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:background="@drawable/rounded_edit_text"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"/>
 
     <!-- Note Content EditText -->
     <EditText
@@ -35,6 +42,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter Note Content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:textColor="?android:textColorPrimary"
         android:textColorHint="?android:textColorSecondary"
         android:textSize="16sp"
@@ -42,9 +51,14 @@
         android:minHeight="150dp"
         android:gravity="top|start"
         android:scrollbars="vertical"
-        android:padding="10dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:background="@drawable/rounded_edit_text"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"/>
 
     <!-- Save Button -->
     <Button
@@ -56,8 +70,9 @@
         android:background="@drawable/rounded_button"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:padding="12dp"
         android:textSize="16sp"
-         android:elevation="4dp"/>
-
+        android:elevation="4dp"/>
 </LinearLayout>
