@@ -1,10 +1,12 @@
 package com.example.note_taking_app.ui.edit
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.note_taking_app.R
@@ -24,6 +26,15 @@ class EditNoteActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityEditNoteBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Set up toolbar
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.title = "Edit Note"
+        binding.toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white))
+
+        // Enable the Up button (back arrow)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
 
 
         // Get the note ID passed from the previous screen
@@ -50,5 +61,16 @@ class EditNoteActivity : AppCompatActivity() {
                 Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                // Handle the back button press using the new method
+                onBackPressedDispatcher.onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

@@ -5,5 +5,7 @@
     <item name="colorPrimaryVariant">@color/colorPrimaryVariantLight</item>
     <item name="colorOnPrimary">@color/colorOnPrimaryLight</item>
     <!-- Customize other attributes as needed -->
+
+    <item name="android:homeAsUpIndicator">@drawable/ic_arrow_back_white</item>
 </style>
 </resources>
