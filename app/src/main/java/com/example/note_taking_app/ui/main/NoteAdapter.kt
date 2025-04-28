@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.note_taking_app.databinding.ItemNoteBinding
 import com.example.note_taking_app.model.Note
+import com.example.note_taking_app.utils.formatTimestamp
 
 class NoteAdapter(private val notes: List<Note>,
                   private val onDelete: (Note) -> Unit,
@@ -27,6 +28,8 @@ class NoteAdapter(private val notes: List<Note>,
         fun bind(note: Note) {
             binding.noteTitle.text = note.title
             binding.noteContent.text = note.content
+            val formattedTimestamp = formatTimestamp(note.timestamp)
+            binding.noteTimestamp.text = formattedTimestamp
             binding.noteDelete.setOnClickListener {
                 onDelete(note) // Handle delete on click
             }
