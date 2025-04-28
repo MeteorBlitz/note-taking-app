@@ -2,21 +2,23 @@ package com.example.note_taking_app.ui.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.edit
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.note_taking_app.R
 import com.example.note_taking_app.databinding.ActivityMainBinding
 import com.example.note_taking_app.ui.addnote.AddNoteActivity
 import com.example.note_taking_app.ui.edit.EditNoteActivity
+import com.example.note_taking_app.utils.Resource
 import com.example.note_taking_app.utils.setStatusBarColorCompat
 import dagger.hilt.android.AndroidEntryPoint
-import androidx.core.content.edit
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -27,7 +29,6 @@ class MainActivity : AppCompatActivity() {
     var isDarkTheme = false  // Default Light mode
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        //WindowCompat.setDecorFitsSystemWindows(window, true)
         super.onCreate(savedInstanceState)
 
         // Initialize ViewBinding
@@ -50,27 +51,55 @@ class MainActivity : AppCompatActivity() {
 
         setStatusBarColorCompat(R.color.colorPrimaryLight)
 
-
         // Set up RecyclerView with View Binding
         binding.rvNotes.layoutManager = LinearLayoutManager(this)
 
-        noteViewModel.allNotes.observe(this, Observer {
-            if (it.isEmpty()) {
-                binding.emptyText.visibility = View.VISIBLE
-                binding.rvNotes.visibility = View.GONE
-            } else {
-                binding.emptyText.visibility = View.GONE
-                binding.rvNotes.visibility = View.VISIBLE
-                adapter = NoteAdapter(it ,{ note ->
-                    noteViewModel.deleteNote(note)
-                },{
-                    val intent = Intent(this, EditNoteActivity::class.java)
-                    intent.putExtra("NOTE_ID", it.id)
-                    startActivity(intent)
-                })
-                binding.rvNotes.adapter = adapter
+        // Observe the LiveData for changes in the notes list
+        noteViewModel.notes.observe(this, Observer { resource ->
+            when (resource) {
+                is Resource.Loading -> {
+                    // Show loading indicator
+                    Log.d("MainActivity", "Loading notes...")
+                    binding.progressBar.visibility = View.VISIBLE
+                    binding.rvNotes.visibility = View.GONE
+                    binding.emptyText.visibility = View.GONE
+                }
+                is Resource.Success -> {
+                    // Display notes
+                    val notes = resource.data
+                    // Update UI to show notes, like updating RecyclerView
+                    Log.d("MainActivity", "Notes fetched successfully.")
+                    binding.progressBar.visibility = View.GONE
+                    val noteList = resource.data
+                    if (noteList.isEmpty()) {
+                        binding.emptyText.visibility = View.VISIBLE
+                        binding.rvNotes.visibility = View.GONE
+                    } else {
+                        binding.emptyText.visibility = View.GONE
+                        binding.rvNotes.visibility = View.VISIBLE
+                        adapter = NoteAdapter(noteList,
+                            { note -> noteViewModel.deleteNote(note) },
+                            { note ->
+                                val intent = Intent(this, EditNoteActivity::class.java)
+                                intent.putExtra("NOTE_ID", note.id)
+                                startActivity(intent)
+                            })
+                        binding.rvNotes.adapter = adapter
+                    }
+                }
+                is Resource.Error -> {
+                    // Show error message
+                    Log.e("MainActivity", "Error loading notes: ${resource.exception.message}")
+                    binding.progressBar.visibility = View.GONE
+                    binding.emptyText.visibility = View.VISIBLE
+                    binding.emptyText.text = "Error loading notes: ${resource.exception.message}"
+                    binding.rvNotes.visibility = View.GONE
+                }
             }
         })
+
+        // Fetch notes on start
+        noteViewModel.fetchAllNotes()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
