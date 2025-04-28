@@ -1,5 +1,6 @@
 package com.example.note_taking_app.data.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.note_taking_app.data.local.NoteDao
 import com.example.note_taking_app.model.Note
@@ -9,22 +10,26 @@ import javax.inject.Singleton
 @Singleton
 class NoteRepository @Inject constructor(private val noteDao: NoteDao) {
 
-    val allNotes: LiveData<List<Note>> = noteDao.getAllNotes()
+    fun getAllNotes(): LiveData<List<Note>> {
+        return noteDao.getAllNotes()
+    }
 
+    // Insert a note
     suspend fun insert(note: Note) {
         noteDao.insert(note)
     }
 
+    // Delete a note
     suspend fun delete(note: Note) {
         noteDao.delete(note)
     }
 
-    // Update
+    // Update a note
     suspend fun update(note: Note) {
         noteDao.update(note)
     }
 
-    // Fetch a note by ID
+    // Get a note by ID
     fun getNoteById(id: Int): LiveData<Note?> {
         return noteDao.getNoteById(id)
     }
