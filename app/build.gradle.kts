@@ -43,22 +43,37 @@ android {
 
 dependencies {
 
+    // Core Android libraries
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+
+    // Testing libraries
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    //room
+    // For LiveData + Architecture Component testing
+    testImplementation(libs.androidx.core.testing)
+    androidTestImplementation(libs.androidx.core.testing)
+
+    // Coroutines Test (for `runTest` and coroutine-based testing)
+    testImplementation(libs.kotlinx.coroutines.test)
+
+    // Room testing (for in-memory DB)
+    testImplementation(libs.androidx.room.testing)
+
+    // Room runtime and compiler
     implementation(libs.androidx.room.runtime)
-    ksp(libs.androidx.room.compiler) // or ksp for Kotlin
-    //DI
+    ksp(libs.androidx.room.compiler)
+
+    // Dependency Injection (Dagger Hilt)
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
-    //lifecycle
+
+    // Lifecycle components
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.livedata.ktx)

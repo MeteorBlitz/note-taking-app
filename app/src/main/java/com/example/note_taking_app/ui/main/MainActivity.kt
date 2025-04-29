@@ -49,8 +49,6 @@ class MainActivity : AppCompatActivity() {
         // Set up toolbar
         setSupportActionBar(binding.topAppBar)
 
-        setStatusBarColorCompat(R.color.colorPrimaryLight)
-
         // Set up RecyclerView with View Binding
         binding.rvNotes.layoutManager = LinearLayoutManager(this)
 

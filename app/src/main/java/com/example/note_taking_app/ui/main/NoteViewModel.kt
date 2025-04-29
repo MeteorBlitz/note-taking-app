@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.note_taking_app.data.repository.INoteRepository
 import com.example.note_taking_app.data.repository.NoteRepository
 import com.example.note_taking_app.model.Note
 import com.example.note_taking_app.utils.Resource
@@ -13,7 +14,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class NoteViewModel @Inject constructor(private val repository: NoteRepository) : ViewModel() {
+class NoteViewModel @Inject constructor(private val repository: INoteRepository) : ViewModel() {
 
     // LiveData wrapped in Resource to handle loading, success, and error states
     private val _notes = MutableLiveData<Resource<List<Note>>>()

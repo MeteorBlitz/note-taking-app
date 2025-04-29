@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import com.example.note_taking_app.data.local.NoteDao
 import com.example.note_taking_app.data.local.NoteDatabase
+import com.example.note_taking_app.data.repository.INoteRepository
+import com.example.note_taking_app.data.repository.NoteRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,5 +31,12 @@ object AppModule {
     @Singleton
     fun provideNoteDao(noteDatabase: NoteDatabase): NoteDao {
         return noteDatabase.noteDao()
+    }
+
+    // Provide the NoteRepository as an INoteRepository
+    @Provides
+    @Singleton
+    fun provideNoteRepository(noteDao: NoteDao): INoteRepository {
+        return NoteRepository(noteDao) // Return your NoteRepository
     }
 }

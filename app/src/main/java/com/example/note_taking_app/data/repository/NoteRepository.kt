@@ -8,6 +8,23 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
+class NoteRepository @Inject constructor(
+    private val noteDao: NoteDao
+) : INoteRepository {
+
+    override fun getAllNotes(): LiveData<List<Note>> = noteDao.getAllNotes()
+
+    override suspend fun insert(note: Note) = noteDao.insert(note)
+
+    override suspend fun delete(note: Note) = noteDao.delete(note)
+
+    override suspend fun update(note: Note) = noteDao.update(note)
+
+    override fun getNoteById(id: Int): LiveData<Note?> = noteDao.getNoteById(id)
+}
+/*
+
+@Singleton
 class NoteRepository @Inject constructor(private val noteDao: NoteDao) {
 
     fun getAllNotes(): LiveData<List<Note>> {
@@ -34,3 +51,4 @@ class NoteRepository @Inject constructor(private val noteDao: NoteDao) {
         return noteDao.getNoteById(id)
     }
 }
+ */
