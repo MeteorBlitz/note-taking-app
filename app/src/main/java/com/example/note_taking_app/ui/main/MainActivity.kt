@@ -17,7 +17,6 @@ import com.example.note_taking_app.databinding.ActivityMainBinding
 import com.example.note_taking_app.ui.addnote.AddNoteActivity
 import com.example.note_taking_app.ui.edit.EditNoteActivity
 import com.example.note_taking_app.utils.Resource
-import com.example.note_taking_app.utils.setStatusBarColorCompat
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,19 +24,19 @@ class MainActivity : AppCompatActivity() {
 
     private val noteViewModel: NoteViewModel by viewModels()
     private lateinit var adapter: NoteAdapter
-    private lateinit var binding: ActivityMainBinding  // Declare binding variable
-    var isDarkTheme = false  // Default Light mode
+    private lateinit var binding: ActivityMainBinding
+    var isDarkTheme = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // Initialize ViewBinding
         binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)  // Use the root view from ViewBinding
+        setContentView(binding.root)
 
         // Check saved theme state and apply it
         val sharedPreferences = getSharedPreferences("app_preferences", MODE_PRIVATE)
-        isDarkTheme = sharedPreferences.getBoolean("isDarkTheme", false) // Default to light mode
+        isDarkTheme = sharedPreferences.getBoolean("isDarkTheme", false)
 
         // Apply the initial theme
         if (isDarkTheme) {
@@ -52,6 +51,19 @@ class MainActivity : AppCompatActivity() {
         // Set up RecyclerView with View Binding
         binding.rvNotes.layoutManager = LinearLayoutManager(this)
 
+        // Initialize the RecyclerView adapter (only once)
+        adapter = NoteAdapter(
+            { note -> noteViewModel.deleteNote(note) },
+            { note ->
+                val intent = Intent(this, EditNoteActivity::class.java)
+                intent.putExtra("NOTE_ID", note.id)
+                startActivity(intent)
+            }
+        )
+
+        // Set the adapter to RecyclerView
+        binding.rvNotes.adapter = adapter
+
         // Observe the LiveData for changes in the notes list
         noteViewModel.notes.observe(this, Observer { resource ->
             when (resource) {
@@ -63,26 +75,18 @@ class MainActivity : AppCompatActivity() {
                     binding.emptyText.visibility = View.GONE
                 }
                 is Resource.Success -> {
-                    // Display notes
-                    val notes = resource.data
-                    // Update UI to show notes, like updating RecyclerView
-                    Log.d("MainActivity", "Notes fetched successfully.")
+                    // Hide progress bar and show notes
                     binding.progressBar.visibility = View.GONE
                     val noteList = resource.data
+
                     if (noteList.isEmpty()) {
                         binding.emptyText.visibility = View.VISIBLE
                         binding.rvNotes.visibility = View.GONE
                     } else {
                         binding.emptyText.visibility = View.GONE
                         binding.rvNotes.visibility = View.VISIBLE
-                        adapter = NoteAdapter(noteList,
-                            { note -> noteViewModel.deleteNote(note) },
-                            { note ->
-                                val intent = Intent(this, EditNoteActivity::class.java)
-                                intent.putExtra("NOTE_ID", note.id)
-                                startActivity(intent)
-                            })
-                        binding.rvNotes.adapter = adapter
+                        // Update the adapter with the new list of notes
+                        adapter.submitList(noteList)  // Use submitList() for efficient updates
                     }
                 }
                 is Resource.Error -> {
@@ -96,7 +100,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        // Fetch notes on start
+        // Fetch notes on start (if needed)
         noteViewModel.fetchAllNotes()
     }
 
