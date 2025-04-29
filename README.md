@@ -48,11 +48,16 @@ This app follows the **MVVM** (Model-View-ViewModel) architecture to separate co
 
 ## Screenshots
 
-_Screenshot 1_ (Add/Edit Note screen)
-
-_Screenshot 2_ (Note List screen)
-
-_Screenshot 3_ (Dark/Light Mode toggle)
+<table>
+  <tr>
+    <td style="text-align: center;"><img src="screenshots/NoteList.jpg" alt="Note List screen" width="200" height="400"><br>Note List</td>
+    <td style="text-align: center;"><img src="screenshots/Add.jpg" alt="Add Note screen" width="200" height="400"><br>Add</td>
+    <td style="text-align: center;"><img src="screenshots/Dark.jpg" alt="Dark/Light Mode toggle" width="200" height="400"><br>Dark/Light Mode toggle</td>
+    <td style="text-align: center;"><img src="screenshots/Snackbar.jpg" alt="Snack bar" width="200" height="400"><br>Snack bar</td>
+    <td style="text-align: center;"><img src="screenshots/Edit.jpg" alt="Edit Note screen" width="200" height="400"><br>Edit</td>
+    <td style="text-align: center;"><img src="screenshots/Delete.jpg" alt="Swipe to delete" width="200" height="400"><br>Delete</td>
+  </tr>
+</table>
 
 ## Installation
 
