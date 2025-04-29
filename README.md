@@ -50,15 +50,19 @@ This app follows the **MVVM** (Model-View-ViewModel) architecture to separate co
 
 <table>
   <tr>
-    <td style="text-align: center;"><img src="screenshots/NoteList.jpg" alt="Note List screen" width="200" height="400"><br>Note List</td>
-    <td style="text-align: center;"><img src="screenshots/Add.jpg" alt="Add Note screen" width="200" height="400"><br>Add</td>
-    <td style="text-align: center;"><img src="screenshots/Dark.jpg" alt="Dark/Light Mode toggle" width="200" height="400"><br>Dark/Light Mode toggle</td>
-    <td style="text-align: center;"><img src="screenshots/Snackbar.jpg" alt="Snack bar" width="200" height="400"><br>Snack bar</td>
-    <td style="text-align: center;"><img src="screenshots/Edit.jpg" alt="Edit Note screen" width="200" height="400"><br>Edit</td>
-    <td style="text-align: center;"><img src="screenshots/Delete.jpg" alt="Swipe to delete" width="200" height="400"><br>Delete</td>
+    <td style="text-align: center;"><img src="screenshots/NoteList.jpg" alt="Note List screen" width="200" height="auto"><br>Note List</td>
+    <td style="text-align: center;"><img src="screenshots/Add.jpg" alt="Add Note screen" width="200" height="auto"><br>Add</td>
+    <td style="text-align: center;"><img src="screenshots/Dark.jpg" alt="Dark/Light Mode toggle" width="200" height="auto"><br>Dark/Light Mode toggle</td>
+    <td style="text-align: center;"><img src="screenshots/Snackbar.jpg" alt="Snack bar" width="200" height="auto"><br>Snack bar</td>
+    <td style="text-align: center;"><img src="screenshots/Edit.jpg" alt="Edit Note screen" width="200" height="auto"><br>Edit</td>
+    <td style="text-align: center;"><img src="screenshots/Delete.jpg" alt="Swipe to delete" width="200" height="auto"><br>Delete</td>
   </tr>
 </table>
 
 ## Installation
 
 To get started, clone the repository:
+
+git clone https://github.com/MeteorBlitz/note-taking-app.git
+
+
