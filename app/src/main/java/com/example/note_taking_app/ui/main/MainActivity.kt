@@ -1,15 +1,19 @@
 package com.example.note_taking_app.ui.main
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import androidx.core.content.edit
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.note_taking_app.R
@@ -46,7 +50,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Set up toolbar
-        setSupportActionBar(binding.topAppBar)
+        setSupportActionBar(binding.toolbar)
+        // Set title and toolbar appearance
+        supportActionBar?.title = "Add Note"
+        binding.toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white))
 
         // Set up RecyclerView with View Binding
         binding.rvNotes.layoutManager = LinearLayoutManager(this)

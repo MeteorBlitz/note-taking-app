@@ -5,6 +5,12 @@
     <item name="colorPrimaryVariant">@color/colorPrimaryVariantDark</item>
     <item name="colorOnPrimary">@color/colorOnPrimaryDark</item>
 
+    <!-- Set the status bar color -->
+    <item name="android:statusBarColor">@color/colorPrimaryDark</item> <!-- Set desired color -->
+
+    <!-- Handle icons to fit your design (Light/Dark status bar icons) -->
+    <item name="android:windowLightStatusBar">true</item>  <!-- If you want light icons on the status bar -->
+
     <item name="android:homeAsUpIndicator">@drawable/ic_arrow_back_white</item>
 </style>
 </resources>

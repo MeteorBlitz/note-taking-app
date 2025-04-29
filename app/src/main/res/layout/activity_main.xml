@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:fitsSystemWindows="true">
 
@@ -12,12 +11,13 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/topAppBar"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="Note Taking App"
-            app:titleTextColor="@android:color/white" />
+            android:background="?attr/colorPrimary"
+            android:elevation="4dp"/>
+
     </FrameLayout>
 
     <!-- Wrapper for RecyclerView and Empty State Text -->
