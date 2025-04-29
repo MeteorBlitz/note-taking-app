@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.note_taking_app.data.repository.INoteRepository
 import com.example.note_taking_app.model.Note
+import com.example.note_taking_app.utils.Resource
 
 class FakeNoteRepository : INoteRepository {
 
@@ -14,21 +15,38 @@ class FakeNoteRepository : INoteRepository {
         return notesLiveData
     }
 
-    override suspend fun insert(note: Note) {
-        notesList.add(note)
-        notesLiveData.postValue(notesList)
-    }
-
-    override suspend fun delete(note: Note) {
-        notesList.remove(note)
-        notesLiveData.postValue(notesList)
-    }
-
-    override suspend fun update(note: Note) {
-        val index = notesList.indexOfFirst { it.id == note.id }
-        if (index != -1) {
-            notesList[index] = note
+    override suspend fun insert(note: Note): Resource<Unit> {
+        return try {
+            notesList.add(note)
             notesLiveData.postValue(notesList)
+            Resource.Success(Unit)
+        } catch (e: Exception) {
+            Resource.Error(e)
+        }
+    }
+
+    override suspend fun delete(note: Note): Resource<Unit> {
+        return try {
+            notesList.remove(note)
+            notesLiveData.postValue(notesList)
+            Resource.Success(Unit)
+        } catch (e: Exception) {
+            Resource.Error(e)
+        }
+    }
+
+    override suspend fun update(note: Note): Resource<Unit> {
+        return try {
+            val index = notesList.indexOfFirst { it.id == note.id }
+            if (index != -1) {
+                notesList[index] = note
+                notesLiveData.postValue(notesList)
+                Resource.Success(Unit)
+            } else {
+                Resource.Error(Exception("Note not found"))
+            }
+        } catch (e: Exception) {
+            Resource.Error(e)
         }
     }
 
