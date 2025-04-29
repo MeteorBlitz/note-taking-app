@@ -1,26 +1,25 @@
 package com.example.note_taking_app.ui.main
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
-import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.note_taking_app.R
 import com.example.note_taking_app.databinding.ActivityMainBinding
 import com.example.note_taking_app.ui.addnote.AddNoteActivity
 import com.example.note_taking_app.ui.edit.EditNoteActivity
 import com.example.note_taking_app.utils.Resource
+import com.example.note_taking_app.utils.SwipeToDeleteCallback
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -70,6 +69,10 @@ class MainActivity : AppCompatActivity() {
 
         // Set the adapter to RecyclerView
         binding.rvNotes.adapter = adapter
+
+        // Add swipe-to-delete using ItemTouchHelper
+        val swipeCallback = SwipeToDeleteCallback(this, adapter, noteViewModel, binding.rvNotes)
+        ItemTouchHelper(swipeCallback).attachToRecyclerView(binding.rvNotes)
 
         // Observe the LiveData for changes in the notes list
         noteViewModel.notes.observe(this, Observer { resource ->
