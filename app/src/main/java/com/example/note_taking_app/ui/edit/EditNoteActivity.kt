@@ -2,74 +2,92 @@ package com.example.note_taking_app.ui.edit
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.note_taking_app.R
 import com.example.note_taking_app.databinding.ActivityEditNoteBinding
 import com.example.note_taking_app.model.Note
 import com.example.note_taking_app.ui.main.NoteViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.getValue
 
 @AndroidEntryPoint
 class EditNoteActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEditNoteBinding
     private val noteViewModel: NoteViewModel by viewModels()
-    private var noteId: Int = -1  // To hold the ID of the note to edit
+    private var noteId: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEditNoteBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Set up toolbar
+        // Toolbar setup
         setSupportActionBar(binding.toolbar)
-        supportActionBar?.title = "Edit Note"
+        supportActionBar?.apply {
+            title = "Edit Note"
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowHomeEnabled(true)
+        }
         binding.toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white))
 
-        // Enable the Up button (back arrow)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
-
-
-        // Get the note ID passed from the previous screen
+        // Get note ID from intent
         noteId = intent.getIntExtra("NOTE_ID", -1)
 
-        if (noteId != -1) {
-            // Fetch the note from the database and display it for editing
-            noteViewModel.getNoteById(noteId).observe(this) { note ->
-                binding.etTitle.setText(note?.title)
-                binding.etDescription.setText(note?.content)
+        if (noteId == -1) {
+            Toast.makeText(this, "Error: Invalid note ID", Toast.LENGTH_SHORT).show()
+            finish()
+            return
+        }
+
+        // Show loading while fetching
+        binding.progressBar.visibility = View.VISIBLE
+        binding.btnSave.isEnabled = false
+
+        // Load note data
+        noteViewModel.getNoteById(noteId).observe(this) { note ->
+            binding.progressBar.visibility = View.GONE
+            binding.btnSave.isEnabled = true
+
+            if (note == null) {
+                Toast.makeText(this, "Note not found", Toast.LENGTH_SHORT).show()
+                finish()
+            } else {
+                binding.etTitle.setText(note.title)
+                binding.etDescription.setText(note.content)
             }
         }
 
+        // Save logic
         binding.btnSave.setOnClickListener {
-            val title = binding.etTitle.text.toString()
-            val description = binding.etDescription.text.toString()
+            val title = binding.etTitle.text.toString().trim()
+            val content = binding.etDescription.text.toString().trim()
 
-            if (title.isNotEmpty() && description.isNotEmpty()) {
-                val updatedNote = Note(id = noteId, title = title, content = description)
-                noteViewModel.updateNote(updatedNote)
-                Toast.makeText(this, "Note updated!", Toast.LENGTH_SHORT).show()
-                finish()  // Close the activity and go back to the main screen
-            } else {
-                Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
+            if (title.isBlank()) {
+                binding.etTitle.error = "Title required"
+                binding.etTitle.requestFocus()
+                return@setOnClickListener
             }
+
+            if (content.isBlank()) {
+                binding.etDescription.error = "Content required"
+                binding.etDescription.requestFocus()
+                return@setOnClickListener
+            }
+
+            val updatedNote = Note(id = noteId, title = title, content = content)
+            noteViewModel.updateNote(updatedNote)
+            Toast.makeText(this, "Note updated!", Toast.LENGTH_SHORT).show()
+            finish()
         }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                // Handle the back button press using the new method
-                onBackPressedDispatcher.onBackPressed()
-                return true
-            }
+        if (item.itemId == android.R.id.home) {
+            onBackPressedDispatcher.onBackPressed()
+            return true
         }
         return super.onOptionsItemSelected(item)
     }
